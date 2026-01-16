@@ -1,4 +1,4 @@
-package com.api.test;
+package com.api.tests;
 
 import static com.api.roles.Role.FD;
 import static com.api.utils.AuthTokenProvider.getToken;
