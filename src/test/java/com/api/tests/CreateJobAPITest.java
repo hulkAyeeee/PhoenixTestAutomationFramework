@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hamcrest.Matchers;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.api.constant.Model;
@@ -24,14 +25,14 @@ import com.api.request.model.Customer;
 import com.api.request.model.CustomerAddress;
 import com.api.request.model.CustomerProduct;
 import com.api.request.model.Problems;
-import com.api.utils.SpecUtil;
+import static com.api.utils.SpecUtil.*;
 
 public class CreateJobAPITest {
 	
+	private CreateJobPayload createJobPayload;
 	
-	
-	@Test
-	public void createJobAPITest() {
+	@BeforeMethod (description ="Creating createJob api request payload")
+	public void setup() {
 		
 		Customer customer=new Customer("Nikhil", "Hulke", "8390276733", "", "nik7hulke@gmail.com", "");
 		CustomerAddress customerAddress = new CustomerAddress("A-107", "Hil Apartments", "Rohini West", "Near Sachdeva High School", "Delhi", "110085", "India", "Delhi");
@@ -43,21 +44,24 @@ public class CreateJobAPITest {
 		List<Problems> problemsList= new ArrayList<Problems>();
 		problemsList.add(problems);
 		
-		CreateJobPayload createJobPayload= new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platfrom.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemsList);
+		createJobPayload= new CreateJobPayload(ServiceLocation.SERVICE_LOCATION_A.getCode(), Platfrom.FRONT_DESK.getCode(), Warranty_Status.IN_WARRANTY.getCode(), OEM.GOOGLE.getCode(), customer, customerAddress, customerProduct, problemsList);
 		
-		
-		 
+	}
+	
+	
+	@Test (description ="Verify if the create job api is able to create Inwarranty job", groups= {"api","regression","smoke"})
+	public void createJobAPITest() {
+
 		given()
-			.spec(SpecUtil.requestSpecWithAuth(Role.FD, createJobPayload))
+			.spec(requestSpecWithAuth(Role.FD, createJobPayload))
 		.when()
 				.post("/job/create")
 		.then()
-				.spec(SpecUtil.responseSpec_OK())
+				.spec(responseSpec_OK())
 				.body(matchesJsonSchemaInClasspath("response-schema/CreateJobAPIResponseSchema.json"))
 				.body("message", equalTo("Job created successfully. "))
 				.body("data.mst_service_location_id", equalTo(1))
 				.body("data.job_number", Matchers.startsWith("JOB_"));
-
 	}
 
 }
