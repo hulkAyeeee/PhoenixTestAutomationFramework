@@ -7,8 +7,7 @@ import org.testng.annotations.Test;
 
 import com.api.utils.SpecUtil;
 
-import static com.api.roles.Role.*;
-
+import static com.api.constant.Role.*;
 import static com.api.utils.AuthTokenProvider.*;
 
 import static com.api.utils.ConfigManager.*;

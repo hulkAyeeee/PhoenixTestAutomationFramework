@@ -1,6 +1,6 @@
 package com.api.tests;
 
-import static com.api.roles.Role.FD;
+import static com.api.constant.Role.FD;
 import static com.api.utils.AuthTokenProvider.getToken;
 import static com.api.utils.ConfigManager.getProperty;
 import static io.restassured.RestAssured.given;

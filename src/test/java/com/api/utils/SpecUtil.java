@@ -4,8 +4,8 @@ import static com.api.utils.ConfigManager.getProperty;
 
 import org.hamcrest.Matchers;
 
+import com.api.constant.Role;
 import com.api.request.model.UserCredentials;
-import com.api.roles.Role;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
