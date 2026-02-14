@@ -1,24 +1,33 @@
-package com.demo.csv;
+package com.api.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import com.dataproviders.api.bean.UserBean;
 import com.opencsv.CSVReader;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.exceptions.CsvException;
 
-public class ReadCSVFile_MapToPojo {
+public class CSVReaderUtil {
 
-	public static void main(String[] args) throws IOException, CsvException {
+	/*
+	 * Constructor is private in Utility class so that other classes cannot create object of the class
+	 * 
+	 * static methods. This class is going to help me in Reading the CSV file and map it to a Bean
+	 */
 	
-		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream("testData\\LoginCreds.csv");
+	private CSVReaderUtil(){
+		
+	}
+	
+	public static void loadCSV(String pathOfCSVFile)  {
+		
+		InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(pathOfCSVFile);
 		InputStreamReader isr = new InputStreamReader(is);
 		CSVReader csvReader = new CSVReader(isr);
-
-		// Code to Map the CSV file to POJO
 		
 		CsvToBean<UserBean> csvToBean= new CsvToBeanBuilder(csvReader)
 				.withType(UserBean.class)
